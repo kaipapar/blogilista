@@ -11,16 +11,16 @@ test('blogs are returned as json', async () => {
     .expect('Content-Type', /application\/json/)
 })
 
-test('there are three blog entrys', async () => {
+test('there are four blog entrys', async () => {
     const response = await api.get('/api/blogs')
   
-    expect(response.body).toHaveLength(3)
+    expect(response.body).toHaveLength(4)
 })
   
-test('the first post is a dummy', async () => {
+test('the id field is called id', async () => {
     const response = await api.get('/api/blogs')
 
-    expect(response.body[0].title).toBe('title')
+    expect(response.body[0].id).toBeDefined()
 })
 
 

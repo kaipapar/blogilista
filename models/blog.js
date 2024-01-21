@@ -7,4 +7,8 @@ const blogSchema = mongoose.Schema({
     likes: Number
   })
 
+blogSchema.set('toJSON', {
+  virtuals: true
+})
+
 module.exports = mongoose.model('Blog', blogSchema)
