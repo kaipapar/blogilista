@@ -23,6 +23,23 @@ test('the id field is called id', async () => {
     expect(response.body[0].id).toBeDefined()
 })
 
+test('post to api/blogs works', async () => {
+    const blogpost = 
+        {
+            "title": "test title",
+            "author": "test author",
+            "url": "myurl",
+            "likes": 69
+        }
+    
+    await api.post('/api/blogs')
+                .send(blogpost)
+                .expect(201)
+                .expect('Content-Type', /application\/json/)
+
+
+
+})
 
 afterAll(async () => {
   await mongoose.connection.close()
