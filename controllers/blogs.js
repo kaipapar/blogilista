@@ -1,11 +1,11 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-
+/* 
 blogsRouter.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>')
-})
+}) */
 
-blogsRouter.get('/api/blogs', (request, response) => {
+blogsRouter.get('/', (request, response) => {
 Blog
   .find({})
   .then(blogs => {
@@ -13,7 +13,7 @@ Blog
   })
 })
 
-blogsRouter.post('/api/blogs', (request, response) => {
+blogsRouter.post('/', (request, response) => {
 const blog = new Blog(request.body)
 
 blog
@@ -23,7 +23,7 @@ blog
   })
 })
 
-blogsRouter.delete('/api/blogs/:id', async (request, response) => {
+blogsRouter.delete('/:id', async (request, response) => {
   await Blog.findByIdAndRemove(request.params.id)
   response.status(204).end()
 })
