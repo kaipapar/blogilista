@@ -41,6 +41,28 @@ blogsRouter.post('/', async (request, response) => {
   response.json(savedBlog)
 })
 
+/* Like a post! */
+blogsRouter.put('/:id', async (request, response) => {
+  const id = request.params.id;
+  const body = request.body;
+
+  try {
+    const blog = await Blog.findById(id);
+
+    if (!blog) {
+      return response.status(404).json({ error: 'Blog not found' });
+    }
+
+    blog.likes = body.likes;
+
+    const updatedBlog = await blog.save();
+    response.json(updatedBlog);
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: 'Server error' });
+  }
+})
+
 blogsRouter.delete('/:id', async (request, response) => {
   await Blog.findByIdAndRemove(request.params.id)
   response.status(204).end()
