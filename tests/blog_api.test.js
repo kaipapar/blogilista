@@ -121,6 +121,26 @@ test('deleting specific blog by id works', async () => {
     expect(responseAtEnd.body).not.toContainEqual(responseAtStart.body[0].content)
 })
 
+test('a blog can be edited', async () => {
+  const [blogBefore] = await helper.blogsInDb()
+
+  const modifiedBlog = {...blogBefore, likes: blogBefore.likes + 1}
+
+  await api
+    .put(`/api/blogs/${blogBefore.id}`)
+    .send(modifiedBlog)
+    .expect(200)
+
+  const blogs = await helper.blogsInDb()
+
+/*   const titles = blogs.map(r => r.likes)
+
+  expect(blogs[blogBefore.id].likes).toBe(
+    modifiedBlog.likes
+    ) */
+  const index = blogs.findIndex(blog => blog.id === blogBefore.id);
+  expect(blogs[index].likes).toBe(modifiedBlog.likes);
+})
 
 afterAll(async () => {
   await mongoose.connection.close()

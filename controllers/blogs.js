@@ -21,6 +21,7 @@ blogsRouter.get('/', async (request, response) => {
 })
 
 blogsRouter.post('/', async (request, response) => {
+  console.log('in the post req')
   const body = request.body
   const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
   if (!decodedToken.id) {
@@ -41,11 +42,12 @@ blogsRouter.post('/', async (request, response) => {
   response.json(savedBlog)
 })
 
-/* Like a post! */
-blogsRouter.put('/:id', async (request, response) => {
+/* update */
+/* blogsRouter.put('/', async (request, response) => {
+  console.log('in the put req')
   const id = request.params.id;
   const body = request.body;
-
+  
   try {
     const blog = await Blog.findById(id);
 
@@ -61,6 +63,13 @@ blogsRouter.put('/:id', async (request, response) => {
     console.error(error);
     response.status(500).json({ error: 'Server error' });
   }
+}) */
+blogsRouter.put('/:id', async (request, response) => {
+  const { user, title, url, author, likes } = request.body
+
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id,  { user, title, url, author, likes }, { new: true })
+
+  response.json(updatedBlog)
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
