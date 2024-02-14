@@ -20,6 +20,18 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs)
 })
 
+blogsRouter.get('/:id', async (request, response) => {
+  Blog.findById(request.params.id)
+    .then(blog => {
+      if (blog) {
+        response.json(blog)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => next(error))
+})
+
 blogsRouter.post('/', async (request, response) => {
   console.log('in the post req')
   const body = request.body
@@ -43,27 +55,6 @@ blogsRouter.post('/', async (request, response) => {
 })
 
 /* update */
-/* blogsRouter.put('/', async (request, response) => {
-  console.log('in the put req')
-  const id = request.params.id;
-  const body = request.body;
-  
-  try {
-    const blog = await Blog.findById(id);
-
-    if (!blog) {
-      return response.status(404).json({ error: 'Blog not found' });
-    }
-
-    blog.likes = body.likes;
-
-    const updatedBlog = await blog.save();
-    response.json(updatedBlog);
-  } catch (error) {
-    console.error(error);
-    response.status(500).json({ error: 'Server error' });
-  }
-}) */
 blogsRouter.put('/:id', async (request, response) => {
   const { user, title, url, author, likes } = request.body
 

@@ -1,0 +1,16 @@
+PUT http://localhost:3001/api/blogs/65ca083088c6da695f37b86d
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ
+
+{
+    "title": "ew",
+    "author": "okl",
+    "url": "http://localhost:5173/",
+    "likes": 70,
+    "user": {
+      "username": "karrik",
+      "name": "Karri Korsu",
+      "id": "65b27cb65ab1ab1ea813c6bc"
+    },
+    "id": "65ca083088c6da695f37b86d"
+  }
