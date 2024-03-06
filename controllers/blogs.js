@@ -67,5 +67,12 @@ blogsRouter.delete('/:id', async (request, response) => {
   await Blog.findByIdAndRemove(request.params.id)
   response.status(204).end()
 })
+/* for initializing db for testing */
+blogsRouter.post('/reset', async (request, response) => {
+  await Note.deleteMany({})
+  await User.deleteMany({})
+
+  response.status(204).end()
+})
 
 module.exports = blogsRouter
